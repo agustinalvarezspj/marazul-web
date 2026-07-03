@@ -5,11 +5,84 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mar Azul Suites Apart Boutique — Bosque Atlántico · Mar Azul</title>
   <meta name="description" content="14 suites boutique en el bosque atlántico de Mar Azul. Arquitectura en madera natural, energía solar, jacuzzi, piscina climatizada 365 días y desayuno artesanal incluido." />
+  <meta name="author" content="Mar Azul Suites Apart Boutique" />
+  <meta name="theme-color" content="#182e38" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <!-- Content-Security-Policy: solo se cargan recursos de dominios de confianza -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https://marazulsuites.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline'; frame-src https://www.google.com; connect-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests" />
+  <!-- PREVIEW: mientras el sitio esté en github.io como borrador va noindex para no competir
+       con marazulsuites.com. Al publicar en el dominio definitivo, cambiar a "index, follow". -->
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="canonical" href="https://agustinalvarezspj.github.io/marazul-web/" />
+
+  <!-- Favicon (SVG inline, sin archivo extra) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23182e38'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='32' fill='%23c4a46b' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E" />
+
+  <!-- Open Graph (WhatsApp, Facebook, LinkedIn) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_AR" />
+  <meta property="og:site_name" content="Mar Azul Suites Apart Boutique" />
+  <meta property="og:title" content="Mar Azul Suites Apart Boutique — Bosque Atlántico" />
+  <meta property="og:description" content="14 suites boutique en el bosque atlántico de Mar Azul. Madera natural, energía solar, jacuzzi, piscina climatizada 365 días y desayuno artesanal." />
+  <meta property="og:url" content="https://agustinalvarezspj.github.io/marazul-web/" />
+  <meta property="og:image" content="https://agustinalvarezspj.github.io/marazul-web/marazul-fotos/frente-hero.jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="800" />
+  <meta property="og:image:alt" content="Complejo Mar Azul Suites en el bosque atlántico" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Mar Azul Suites Apart Boutique — Bosque Atlántico" />
+  <meta name="twitter:description" content="14 suites boutique en el bosque atlántico de Mar Azul. Madera natural, energía solar, jacuzzi y piscina climatizada todo el año." />
+  <meta name="twitter:image" content="https://agustinalvarezspj.github.io/marazul-web/marazul-fotos/frente-hero.jpeg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap?v=20260629" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css?v=20260629" crossorigin="anonymous" />
+  <link rel="preload" as="image" href="marazul-fotos/video-hero-poster.jpg" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Datos estructurados Schema.org — Hotel (clave para Google / búsquedas locales) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Hotel",
+    "name": "Mar Azul Suites Apart Boutique",
+    "description": "14 suites boutique construidas en madera natural en el bosque atlántico de Mar Azul. Energía solar, jacuzzi en cada suite, piscina climatizada todo el año y desayuno artesanal incluido.",
+    "url": "https://agustinalvarezspj.github.io/marazul-web/",
+    "image": "https://agustinalvarezspj.github.io/marazul-web/marazul-fotos/frente-hero.jpeg",
+    "telephone": "+54-9-2255-403056",
+    "email": "info@marazulsuites.com",
+    "priceRange": "$$$",
+    "petsAllowed": false,
+    "numberOfRooms": 14,
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Calle 36 N° 244",
+      "addressLocality": "Mar Azul",
+      "addressRegion": "Buenos Aires",
+      "addressCountry": "AR"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": -37.3500,
+      "longitude": -56.9900
+    },
+    "amenityFeature": [
+      { "@type": "LocationFeatureSpecification", "name": "Jacuzzi en la habitación", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Piscina climatizada", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Desayuno incluido", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Energía solar", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Estacionamiento cubierto", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "WiFi gratis", "value": true }
+    ],
+    "sameAs": [
+      "https://www.instagram.com/marazulsuites/",
+      "https://www.facebook.com/marazulsuites",
+      "https://marazulsuites.com"
+    ]
+  }
+  </script>
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
