@@ -203,6 +203,21 @@
     }
     .nav-dropdown-menu a:hover { background: rgba(255,255,255,.05); }
 
+    /* ── HAMBURGUESA (móvil) ── */
+    .nav-links-cta { display: none; }
+    .nav-toggle {
+      display: none; background: none; border: none; cursor: pointer;
+      width: 40px; height: 40px; padding: 8px; position: relative; z-index: 120;
+    }
+    .nav-toggle span {
+      display: block; width: 100%; height: 2px; background: #fff;
+      border-radius: 2px; transition: transform .3s, opacity .3s;
+    }
+    .nav-toggle span + span { margin-top: 6px; }
+    .navbar.menu-open .nav-toggle span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .navbar.menu-open .nav-toggle span:nth-child(2) { opacity: 0; }
+    .navbar.menu-open .nav-toggle span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
     /* ── MARQUEE ── */
     .marquee-section { background: var(--azul); overflow: hidden; padding: 13px 0; }
     .marquee-track {
@@ -766,9 +781,44 @@
       .leads-inner { grid-template-columns: 1fr; gap: 56px; }
     }
     @media (max-width: 768px) {
-      .home-hero { height: 50vh; }
+      .home-hero { height: 82vh; min-height: 480px; }
+      .home-hero-video { object-position: center center; }
+      .home-hero-content { padding: 0 24px; }
+      .home-hero-sub { font-size: 1rem; }
       .nav-inner { padding: 0 20px; }
-      .nav-links { display: none; }
+      .nav-cta { display: none; }              /* Consultar pasa al menú desplegable */
+      .nav-toggle { display: block; }
+
+      /* Menú móvil desplegable */
+      .nav-links {
+        position: fixed; top: 72px; left: 0; right: 0;
+        background: var(--nav); flex-direction: column; align-items: stretch;
+        gap: 0; padding: 8px 0 20px; z-index: 110;
+        max-height: 0; overflow: hidden; opacity: 0;
+        box-shadow: 0 20px 40px rgba(0,0,0,.35);
+        transition: max-height .4s ease, opacity .3s ease;
+      }
+      .navbar.menu-open .nav-links { max-height: calc(100vh - 72px); opacity: 1; overflow-y: auto; }
+      .nav-links a {
+        color: #fff; font-size: .95rem; letter-spacing: .1em;
+        padding: 16px 28px; border-bottom: 1px solid rgba(255,255,255,.08);
+      }
+      .nav-dropdown { display: block; }
+      .nav-dropdown > a { padding: 16px 28px; border-bottom: 1px solid rgba(255,255,255,.08); }
+      /* En móvil el submenú de Suites se muestra siempre expandido */
+      .nav-dropdown-menu {
+        position: static; transform: none; opacity: 1; visibility: visible;
+        min-width: auto; margin: 0; padding: 0; box-shadow: none; border: none;
+        background: rgba(0,0,0,.2);
+      }
+      .nav-dropdown-menu a { padding-left: 44px; font-size: .85rem; }
+      .nav-links-cta {
+        display: flex; align-items: center; gap: 10px;
+        margin: 16px 20px 0; padding: 15px 20px !important;
+        background: var(--azul) !important; color: var(--nav) !important; font-weight: 600;
+        border-radius: 4px; justify-content: center; border-bottom: none !important;
+      }
+
       .home-grid { grid-template-columns: repeat(2, 1fr); padding: 0 20px; }
       .home-card { height: 180px; }
       .suite-cards { grid-template-columns: 1fr; }
@@ -782,11 +832,23 @@
       .form-row { grid-template-columns: 1fr; }
       .stats-inner { grid-template-columns: repeat(2, 1fr); }
       .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,.1); }
-      .cinematic { height: 320px; }
+      .cinematic { height: 300px; }
+      .cinematic-content blockquote { font-size: 1.35rem !important; }
       .panel-breadcrumb { padding: 10px 20px; }
       .home-desc-inner { padding: 0 20px; }
       .home-menu-header { padding: 0 20px; }
       .container { padding: 0 20px; }
+
+      /* Splits editoriales: menos padding, fotos más alto en móvil */
+      .arq-text, .arq-text-light { padding: 48px 24px; }
+      .arq-img { height: 300px; }
+      .edit-foto-multi { min-height: 300px; }
+      .arq-text h2, .arq-text-light h2 { font-size: clamp(1.8rem, 8vw, 2.4rem); }
+      .edit-dark-section { padding: 56px 0; }
+      .servicios-icon-grid { grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 40px; }
+
+      /* Botón flotante WhatsApp: no tapar contenido, tamaño táctil */
+      .wa-float { width: 52px; height: 52px; bottom: 18px; right: 18px; }
     }
   </style>
 </head>
@@ -799,7 +861,7 @@
       <img src="https://marazulsuites.com/wp-content/uploads/2023/09/LogoBlancoSinFondo-02-1.png"
            alt="Mar Azul Suites Apart Boutique" />
     </a>
-    <div class="nav-links">
+    <div class="nav-links" id="navLinks">
       <a data-panel="inicio"          class="active">Inicio</a>
       <div class="nav-dropdown">
         <a data-panel="suites-apart">Suites</a>
@@ -811,8 +873,12 @@
       <a data-panel="servicios"      >Servicios</a>
       <a data-panel="espacios"       >Espacios</a>
       <a data-panel="promociones"    >Promociones</a>
+      <a href="https://wa.me/5492255403056" class="nav-links-cta" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Consultar por WhatsApp</a>
     </div>
     <a href="https://wa.me/5492255403056" class="btn btn-outline-w nav-cta" target="_blank" rel="noopener">Consultar</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navLinks">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
 
@@ -826,7 +892,6 @@
     <video class="home-hero-video" autoplay muted loop playsinline preload="auto"
            poster="marazul-fotos/video-hero-poster.jpg">
       <source src="marazul-fotos/video-hero.mp4" type="video/mp4" />
-      <source src="marazul-fotos/video-hero.mov" type="video/quicktime" />
     </video>
     <div class="home-hero-overlay"></div>
     <div class="home-hero-content">
@@ -1900,9 +1965,37 @@
     /* update browser hash */
     try { history.replaceState(null, "", "#" + id); } catch(e) {}
 
+    /* cerrar menú móvil si estaba abierto */
+    closeMobileMenu();
+
     /* navbar transparente solo sobre el hero de inicio */
     updateNavState();
   };
+
+  /* ── Menú hamburguesa (móvil) ───────────────────── */
+  function closeMobileMenu() {
+    var nav = document.getElementById("navbar");
+    var toggle = document.getElementById("navToggle");
+    if (nav) nav.classList.remove("menu-open");
+    if (toggle) toggle.setAttribute("aria-expanded", "false");
+    document.body.style.overflow = "";
+  }
+  function initMobileMenu() {
+    var nav = document.getElementById("navbar");
+    var toggle = document.getElementById("navToggle");
+    if (!nav || !toggle) return;
+    toggle.addEventListener("click", function() {
+      var open = nav.classList.toggle("menu-open");
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    /* cerrar al tocar el CTA de WhatsApp del menú */
+    var cta = document.querySelector(".nav-links-cta");
+    if (cta) cta.addEventListener("click", closeMobileMenu);
+    /* cerrar con tecla Escape */
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape") closeMobileMenu();
+    });
+  }
 
   window.updateNavState = function() {
     var nav = document.getElementById("navbar");
@@ -2042,6 +2135,7 @@
   /* ── Boot ───────────────────────────────────────── */
   document.addEventListener("DOMContentLoaded", function() {
     safe(initNavLinks,  "navlinks");
+    safe(initMobileMenu, "mobilemenu");
     safe(initHomGrid,   "homgrid");
     safe(initNav,       "nav");
     safe(initParallax,  "parallax");
