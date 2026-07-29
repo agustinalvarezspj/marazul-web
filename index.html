@@ -459,6 +459,10 @@
     .arq-img { overflow: hidden; position: relative; }
     .arq-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.4,0,.2,1); }
     .arq-img:hover img { transform: scale(1.04); }
+    /* Carrusel de espacios */
+    .arq-carousel .arq-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.1s ease; }
+    .arq-carousel .arq-slide.active { opacity: 1; }
+    .arq-carousel .arq-slide img { width: 100%; height: 100%; object-fit: cover; }
     .arq-img-label {
       position: absolute; bottom: 24px; left: 24px;
       background: rgba(14,30,38,.72); color: rgba(255,255,255,.75);
@@ -503,11 +507,24 @@
     .edit-dark-section .eyebrow { color: var(--azul); }
     .edit-dark-section h2 { color: #fff; }
     .edit-dark-section p { color: rgba(255,255,255,.7); }
-    .servicios-icon-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 40px; margin-top: 60px; }
+    .servicios-icon-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 40px; margin-top: 60px; }
     .servicio-icon-item { text-align: center; }
     .servicio-icon-item i { font-size: 1.8rem; color: var(--azul); margin-bottom: 16px; display: block; }
     .servicio-icon-item h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 400; color: #fff; margin-bottom: 8px; }
     .servicio-icon-item p { font-size: .85rem; color: rgba(255,255,255,.6); }
+    /* Cards de espacios comunes (Espacios) */
+    .espacios-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .espacio-card { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; }
+    .espacio-card .ec-img { height: 220px; overflow: hidden; }
+    .espacio-card .ec-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.4,0,.2,1); }
+    .espacio-card:hover .ec-img img { transform: scale(1.05); }
+    .espacio-card .ec-noimg { height: 220px; display: flex; align-items: center; justify-content: center; background: rgba(101,182,203,.08); }
+    .espacio-card .ec-noimg i { font-size: 3rem; color: var(--azul); }
+    .espacio-card .ec-body { padding: 22px 24px; }
+    .espacio-card .ec-body h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 400; color: #fff; margin-bottom: 8px; }
+    .espacio-card .ec-body p { font-size: .85rem; color: rgba(255,255,255,.62); line-height: 1.6; }
+    @media (max-width: 900px) { .espacios-cards { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .espacios-cards { grid-template-columns: 1fr; } }
     .resena-pull { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.3rem,2.5vw,2rem); font-style: italic; font-weight: 300; color: var(--texto); line-height: 1.5; border-left: 3px solid var(--azul); padding-left: 28px; margin-bottom: 12px; }
     .resena-pull-autor { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--dorado); padding-left: 28px; }
     .resenas-pull-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 56px; }
@@ -1318,11 +1335,11 @@
     <div class="arq-text-light">
       <span class="eyebrow">Abierta todo el año</span>
       <h2>Piscina climatizada cubierta</h2>
-      <p>Totalmente vidriada al bosque, con temperatura controlada gracias a los colectores solares térmicos. Abierta de 9 a 21 hs los 365 días del año.</p>
+      <p>Totalmente vidriada al bosque, con temperatura controlada gracias al uso de energía renovable. Abierta de 9 a 21 hs los 365 días del año.</p>
       <div class="arq-feats">
         <div class="arq-feat light"><i class="fa-solid fa-water-ladder"></i><div><h4>Abierta 365 días</h4><p>Incluyendo invierno y temporada baja.</p></div></div>
         <div class="arq-feat light"><i class="fa-solid fa-hot-tub"></i><div><h4>Jacuzzi exterior · Solo adultos</h4><p>Al aire libre en el jardín del complejo.</p></div></div>
-        <div class="arq-feat light"><i class="fa-solid fa-solar-panel"></i><div><h4>Climatizada con energía solar</h4><p>Temperatura ideal con colectores solares térmicos.</p></div></div>
+        <div class="arq-feat light"><i class="fa-solid fa-solar-panel"></i><div><h4>Climatizada con energía renovable</h4><p>Temperatura ideal mantenida con energía renovable.</p></div></div>
       </div>
       <a href="https://wa.me/5492255403056" class="btn btn-primary" style="margin-top:36px;align-self:flex-start" target="_blank" rel="noopener">Consultar disponibilidad</a>
     </div>
@@ -1339,6 +1356,11 @@
         <h2>El resto de los servicios</h2>
       </div>
       <div class="servicios-icon-grid reveal">
+        <div class="servicio-icon-item">
+          <i class="fa-solid fa-wifi"></i>
+          <h4>WiFi de alta velocidad</h4>
+          <p>Conexión gratuita en todas las suites y espacios comunes del complejo.</p>
+        </div>
         <div class="servicio-icon-item">
           <i class="fa-solid fa-umbrella-beach"></i>
           <h4>Servicio de playa</h4>
@@ -1377,10 +1399,27 @@
 
   <div class="arquitectura">
     <div class="arq-split">
-      <div class="arq-img reveal-left">
-        <img src="marazul-fotos/suite-prof-8.jpg"
-             alt="Interior del complejo — arquitectura artesanal en madera natural" loading="lazy" />
-        <div class="arq-img-label">Construcción en piedra y madera natural</div>
+      <div class="arq-img reveal-left arq-carousel" id="espaciosCarousel">
+        <div class="arq-slide active">
+          <img src="marazul-fotos/suite-prof-8.jpg" alt="Arquitectura en piedra y madera natural" loading="lazy" />
+          <div class="arq-img-label">Arquitectura en piedra y madera natural</div>
+        </div>
+        <div class="arq-slide">
+          <img src="marazul-fotos/piscina-interior-1.jpg" alt="Piscina climatizada cubierta" loading="lazy" />
+          <div class="arq-img-label">Piscina climatizada cubierta</div>
+        </div>
+        <div class="arq-slide">
+          <img src="marazul-fotos/quincho-exterior.jpg" alt="Quincho exterior en el bosque" loading="lazy" />
+          <div class="arq-img-label">Quincho exterior en el bosque</div>
+        </div>
+        <div class="arq-slide">
+          <img src="marazul-fotos/juegos-salon.jpg" alt="Sala de juegos" loading="lazy" />
+          <div class="arq-img-label">Sala de juegos</div>
+        </div>
+        <div class="arq-slide">
+          <img src="marazul-fotos/salon-comun.jpg" alt="Quincho con parrilla" loading="lazy" />
+          <div class="arq-img-label">Quincho con parrilla</div>
+        </div>
       </div>
       <div class="arq-text reveal-right">
         <span class="eyebrow">Diseño y construcción</span>
@@ -1419,7 +1458,7 @@
         <div class="sustent-content reveal-left">
           <span class="eyebrow">Espacios comunes</span>
           <h2>Piscina climatizada cubierta todo el año</h2>
-          <p>Nuestra piscina IN-OUT permanece climatizada los 365 días del año gracias a los colectores solares térmicos. El espacio más único del complejo: agua caliente, rodeada de bosque, incluso en julio.</p>
+          <p>Nuestra piscina IN-OUT permanece climatizada los 365 días del año gracias al uso de energía renovable. El espacio más único del complejo: agua caliente, rodeada de bosque, incluso en julio.</p>
           <ul class="sustent-list" style="margin-top:20px">
             <li class="sustent-item">
               <i class="fa-solid fa-water-ladder"></i>
@@ -1430,16 +1469,8 @@
               <div><h4>Jacuzzi exterior · Solo adultos</h4><p>Jacuzzi al aire libre de uso exclusivo para adultos, en el jardín del complejo.</p></div>
             </li>
             <li class="sustent-item">
-              <i class="fa-solid fa-fire"></i>
-              <div><h4>Quinchos con parrilla</h4><p>Quincho interior equipado (parrilla, heladera, metegol, ping pong) y quincho exterior con horno de barro. Uso por sistema de reservas al hacer check-in.</p></div>
-            </li>
-            <li class="sustent-item">
               <i class="fa-solid fa-sun"></i>
               <div><h4>Solarium</h4><p>Área de sol con camastros y mobiliario exterior tipo living en el jardín principal.</p></div>
-            </li>
-            <li class="sustent-item">
-              <i class="fa-solid fa-car"></i>
-              <div><h4>Estacionamiento cubierto</h4><p>Cochera techada dentro del predio para todas las suites, sin costo adicional.</p></div>
             </li>
           </ul>
         </div>
@@ -1461,27 +1492,34 @@
     </div>
   </section>
 
-  <!-- Quincho y sala de juegos -->
+  <!-- Quincho, juegos y otros espacios comunes -->
   <section style="padding: 80px 0; background: var(--nav);">
     <div class="container">
-      <div class="text-center reveal" style="margin-bottom:48px">
+      <div class="reveal" style="text-align:center; max-width:560px; margin:0 auto 48px">
         <span class="eyebrow" style="color:var(--azul)">Espacios comunes</span>
         <h2 style="color:#fff; margin:12px 0">Quincho, parrilla y sala de juegos</h2>
-        <p style="color:rgba(255,255,255,.75); max-width:560px; margin:0 auto">Espacios para disfrutar con familia o amigos sin salir del complejo. Reserva tu turno al hacer check-in.</p>
+        <p style="color:rgba(255,255,255,.75)">Espacios para disfrutar con familia o amigos sin salir del complejo. Reserva tu turno al hacer check-in.</p>
       </div>
-      <div class="quincho-grid">
-        <div class="quincho-main reveal-left">
-          <img src="marazul-fotos/quincho-interior.jpg" alt="Quincho interior — mesas y parrilla" loading="lazy" />
-          <div class="quincho-label">Quincho interior con parrilla y horno de barro</div>
+      <div class="espacios-cards reveal">
+        <div class="espacio-card">
+          <div class="ec-img"><img src="marazul-fotos/salon-comun.jpg" alt="Quincho interior con parrilla" loading="lazy" /></div>
+          <div class="ec-body"><h4>Quincho con parrilla</h4><p>Quincho interior equipado con parrilla, heladera y barra. El lugar ideal para un asado sin salir del complejo.</p></div>
         </div>
-        <div class="quincho-side">
-          <div class="quincho-sm reveal delay-1">
-            <img src="marazul-fotos/quincho-exterior.jpg" alt="Quincho exterior del complejo" loading="lazy" />
-          </div>
-          <div class="quincho-sm reveal delay-2">
-            <img src="marazul-fotos/juegos-metegol.jpg" alt="Sala de juegos — metegol" loading="lazy" />
-            <div class="quincho-label">Sala de juegos: metegol y ping pong</div>
-          </div>
+        <div class="espacio-card">
+          <div class="ec-img"><img src="marazul-fotos/quincho-exterior.jpg" alt="Quincho exterior con horno de barro" loading="lazy" /></div>
+          <div class="ec-body"><h4>Quincho exterior con horno de barro</h4><p>Área exterior con horno de barro, rodeada de bosque, para disfrutar al aire libre.</p></div>
+        </div>
+        <div class="espacio-card">
+          <div class="ec-img"><img src="marazul-fotos/juegos-salon.jpg" alt="Sala de juegos — ping pong y metegol" loading="lazy" /></div>
+          <div class="ec-body"><h4>Sala de juegos</h4><p>Metegol, ping pong y más, en un salón vidriado con vista al bosque.</p></div>
+        </div>
+        <div class="espacio-card">
+          <div class="ec-img"><img src="marazul-fotos/quincho-parrilla.jpg" alt="Sala de mesa y lectura con galería de arte" loading="lazy" /></div>
+          <div class="ec-body"><h4>Sala de mesa y lectura · Galería de arte</h4><p>Un espacio para leer, jugar juegos de mesa y apreciar la galería de arte del complejo.</p></div>
+        </div>
+        <div class="espacio-card">
+          <div class="ec-noimg"><i class="fa-solid fa-car"></i></div>
+          <div class="ec-body"><h4>Estacionamiento cubierto</h4><p>Cochera techada dentro del predio para todas las suites, sin costo adicional. Con videovigilancia las 24 hs.</p></div>
         </div>
       </div>
     </div>
@@ -1639,7 +1677,7 @@
       </div>
 
       <div style="margin-top:56px; padding-top:40px; border-top:1px solid var(--borde);">
-        <p style="margin-bottom:20px; color:var(--texto-s)">¿No encontraste lo que buscabas? Escribinos directamente.</p>
+        <p style="margin-bottom:20px; color:var(--texto-s)">Si tenés otra pregunta, escribinos.</p>
         <a href="https://wa.me/5492255403056" class="btn btn-primary" target="_blank" rel="noopener">
           <i class="fa-brands fa-whatsapp"></i>
           Consultar por WhatsApp
@@ -2024,6 +2062,20 @@
     });
   }
 
+  /* ── Carrusel de espacios ───────────────────────── */
+  function initEspaciosCarousel() {
+    var car = document.getElementById("espaciosCarousel");
+    if (!car) return;
+    var slides = car.querySelectorAll(".arq-slide");
+    if (slides.length < 2) return;
+    var i = 0;
+    setInterval(function() {
+      slides[i].classList.remove("active");
+      i = (i + 1) % slides.length;
+      slides[i].classList.add("active");
+    }, 4500);
+  }
+
   /* ── Hero parallax (home only) ──────────────────── */
   function initParallax() {
     var bg = document.getElementById("homeBg");
@@ -2136,6 +2188,7 @@
   document.addEventListener("DOMContentLoaded", function() {
     safe(initNavLinks,  "navlinks");
     safe(initMobileMenu, "mobilemenu");
+    safe(initEspaciosCarousel, "espacioscarousel");
     safe(initHomGrid,   "homgrid");
     safe(initNav,       "nav");
     safe(initParallax,  "parallax");
